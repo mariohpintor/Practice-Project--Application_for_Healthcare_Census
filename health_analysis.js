@@ -65,6 +65,12 @@
 
     addPatientButton.addEventListener("click", addPatient);
 
+    const Imagenes = {
+      "thyroid": "https://my.clevelandclinic.org/-/scassets/images/org/health/articles/23188-thyroid-2",
+       "diabetes":"https://www.niddk.nih.gov/-/media/Images/Health-Information/Diabetes/BloodGlucoseImageSPANISH2Feb231200x800.jpg", 
+       "high blood pressure":"https://sa1s3optim.patientpop.com/assets/images/provider/photos/2736887.jpeg", 
+    }
+
 
 
     function searchCondition() {
@@ -72,7 +78,9 @@
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = '';
 
-        fetch('health_analysis.json')
+        const urljson = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMSkillsNetwork-JS0101EN-SkillsNetwork/health1.json";
+
+        fetch(urljson)
           .then(response => response.json())
           .then(data => {
             const condition = data.conditions.find(item => item.name.toLowerCase() === input);
@@ -81,6 +89,8 @@
               const symptoms = condition.symptoms.join(', ');
               const prevention = condition.prevention.join(', ');
               const treatment = condition.treatment;
+
+              condition.imagesrc = Imagenes[input];
 
               resultDiv.innerHTML += `<h2>${condition.name}</h2>`;
               resultDiv.innerHTML += `<img src="${condition.imagesrc}" alt="hjh">`;
